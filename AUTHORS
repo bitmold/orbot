@@ -1,5 +1,5 @@
 This file lists the authors for Orbot, a free software project to provide
-anonymity on the Internet on Android smartphones.
+anonymity on the Internet on Android devices.
 
 For more information about Orbot, see https://guardianproject.info/apps/orbot
 
@@ -10,11 +10,6 @@ Main Authors:
 -------------
 Nathan Freitas <nathan@freitas.net> developed the primary Android
 application and managed the porting of Tor to Android.
-
-Jake Appelbaum <jacob@appelbaum.net> regularly gave Nathan a swift kick
-in the rear to get this done. He has also provided extensive guidance
-and review. Most recently he has been promoted to Chief Application
-Resource Editor.
 
 Derek Halliday <derek@guardianproject.info> has designed and implemented
 new user interface components and layouts since the 1.0.4 release. 
