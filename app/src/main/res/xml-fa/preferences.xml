@@ -2,37 +2,34 @@
 
 <PreferenceCategory android:title="@string/pref_general_group">
 
-    <im.delight.android.languages.LanguagePreference
-        android:key="pref_default_locale"
-        android:title="@string/set_locale_title"
-        android:enabled="true"
-        android:selectable="true"
-        android:defaultValue="fa"
-        />
-
+  <ListPreference
+      android:key="pref_default_locale"
+      android:title="@string/set_locale_title"
+      android:enabled="true"
+      android:selectable="true" />
     <CheckBoxPreference
-android:defaultValue="true" 
+android:defaultValue="true"
 android:key="pref_start_boot"
 android:title="@string/pref_start_boot_title"
 android:summary="@string/pref_start_boot_summary"
 android:enabled="true"/>
 
 <CheckBoxPreference
-android:defaultValue="true" 
+android:defaultValue="true"
 android:key="pref_persistent_notifications"
 android:summary="@string/pref_use_persistent_notifications"
-android:enabled="true" 
+android:enabled="true"
 android:title="@string/pref_use_persistent_notifications_title"/>
 
 <CheckBoxPreference
-android:defaultValue="true" 
+android:defaultValue="true"
 android:key="pref_expanded_notifications"
 android:summary="@string/pref_use_expanded_notifications"
-android:enabled="true" 
+android:enabled="true"
 android:title="@string/pref_use_expanded_notifications_title"/>
 
 <CheckBoxPreference
-android:defaultValue="true" 
+android:defaultValue="true"
 android:key="pref_allow_background_starts"
 android:summary="@string/pref_allow_background_starts_summary"
 android:title="@string/pref_allow_background_starts_title"/>
@@ -46,7 +43,7 @@ android:title="@string/pref_allow_background_starts_title"/>
 </PreferenceCategory>
 <PreferenceCategory android:title="@string/pref_node_configuration"
  android:summary="@string/pref_node_configuration_summary">
- 
+
 <EditTextPreference android:key="pref_entrance_nodes"
 android:title="@string/pref_entrance_node"
 android:summary="@string/pref_entrance_node_summary"
@@ -63,15 +60,15 @@ android:summary="@string/fingerprints_nicks_countries_and_addresses_to_exclude"
 android:dialogTitle="@string/enter_exclude_nodes"
 />
 
-<CheckBoxPreference android:defaultValue="false" 
-android:title="@string/strict_nodes" android:key="pref_strict_nodes" 
+<CheckBoxPreference android:defaultValue="false"
+android:title="@string/strict_nodes" android:key="pref_strict_nodes"
 android:summary="@string/use_only_these_specified_nodes"/>
 
-</PreferenceCategory> 
+</PreferenceCategory>
 <PreferenceCategory android:title="@string/bridges">
 
 <CheckBoxPreference android:defaultValue="true"
-android:title="@string/use_bridges" android:key="pref_bridges_enabled" 
+android:title="@string/use_bridges" android:key="pref_bridges_enabled"
 android:summary="@string/enable_alternate_entrance_nodes_into_the_tor_network"/>
 
 <EditTextPreference android:key="pref_bridges_list"
@@ -180,28 +177,28 @@ android:dialogTitle="@string/pref_proxy_password_dialog"
 </PreferenceCategory>
 
 <PreferenceCategory android:title="Debug">
-    
+
     <EditTextPreference android:key="pref_socks"
 android:title="@string/pref_socks_title"
 android:summary="@string/pref_socks_summary"
 android:dialogTitle="@string/pref_socks_dialog"
 android:defaultValue="9050"
 />
-    
+
       <EditTextPreference android:key="pref_transport"
 android:title="@string/pref_transport_title"
 android:summary="@string/pref_transport_summary"
 android:dialogTitle="@string/pref_transport_dialog"
 android:defaultValue="9040"
 />
-      
+
         <EditTextPreference android:key="pref_dnsport"
 android:title="@string/pref_dnsport_title"
 android:summary="@string/pref_dnsport_summary"
 android:dialogTitle="@string/pref_dnsport_dialog"
 android:defaultValue="5400"
 />
-    
+
   <EditTextPreference android:key="pref_custom_torrc"
 android:title="@string/pref_torrc_title"
 android:summary="@string/pref_torrc_summary"
@@ -220,10 +217,10 @@ android:enabled="true"
 
 
 <CheckBoxPreference
-android:defaultValue="true" 
+android:defaultValue="true"
 android:key="pref_disable_network"
 android:summary="@string/pref_disable_network_summary"
-android:enabled="true" 
+android:enabled="true"
 android:title="@string/pref_disable_network_title"/>
 
 </PreferenceCategory>
