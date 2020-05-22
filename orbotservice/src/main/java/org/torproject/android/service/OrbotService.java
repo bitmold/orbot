@@ -80,8 +80,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
-import static org.torproject.android.service.vpn.VpnUtils.getSharedPrefs;
-
 public class OrbotService extends VpnService implements TorServiceConstants, OrbotConstants
 {
 
@@ -1168,7 +1166,7 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
                             confDns = st.nextToken().split(":")[1];
                             confDns = confDns.substring(0, confDns.length() - 1);
                             mPortDns = Integer.parseInt(confDns);
-                            getSharedPrefs(getApplicationContext()).edit().putInt(VpnPrefs.PREFS_DNS_PORT, mPortDns).apply();
+                            Prefs.getSharedPrefs(getApplicationContext()).edit().putInt(VpnPrefs.PREFS_DNS_PORT, mPortDns).apply();
                         }
 
                         String confTrans = conn.getInfo("net/listeners/trans");

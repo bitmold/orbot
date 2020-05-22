@@ -96,7 +96,6 @@ import static org.torproject.android.service.TorServiceConstants.ACTION_START;
 import static org.torproject.android.service.TorServiceConstants.ACTION_START_VPN;
 import static org.torproject.android.service.TorServiceConstants.ACTION_STOP_VPN;
 import static org.torproject.android.service.vpn.VpnPrefs.PREFS_KEY_TORIFIED;
-import static org.torproject.android.service.vpn.VpnUtils.getSharedPrefs;
 
 public class OrbotMainActivity extends AppCompatActivity
         implements OrbotConstants, OnLongClickListener {
@@ -203,7 +202,7 @@ public class OrbotMainActivity extends AppCompatActivity
         }
 
         // Resets previous DNS Port to the default.
-        getSharedPrefs(getApplicationContext()).edit().putInt(VpnPrefs.PREFS_DNS_PORT,
+        Prefs.getSharedPrefs(getApplicationContext()).edit().putInt(VpnPrefs.PREFS_DNS_PORT,
                 VpnConstants.TOR_DNS_PORT_DEFAULT).apply();
 
     }

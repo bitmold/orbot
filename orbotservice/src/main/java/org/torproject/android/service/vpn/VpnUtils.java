@@ -1,8 +1,5 @@
 package org.torproject.android.service.vpn;
 
-import android.app.ActivityManager;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.apache.commons.io.IOUtils;
@@ -13,17 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import static android.content.Context.ACTIVITY_SERVICE;
 import static java.lang.Runtime.getRuntime;
-import static org.torproject.android.service.vpn.VpnConstants.SHELL_CMD_PS;
-import static org.torproject.android.service.vpn.VpnPrefs.PREF_TOR_SHARED_PREFS;
 
 public class VpnUtils {
-
-    public static SharedPreferences getSharedPrefs(Context context) {
-        return context.getSharedPreferences(PREF_TOR_SHARED_PREFS,
-                Context.MODE_MULTI_PROCESS);
-    }
 
 
     public static int findProcessId(String command) throws IOException {

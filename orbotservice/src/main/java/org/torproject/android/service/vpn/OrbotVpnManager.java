@@ -40,6 +40,7 @@ import org.torproject.android.service.OrbotService;
 import org.torproject.android.service.R;
 import org.torproject.android.service.TorServiceConstants;
 import org.torproject.android.service.util.CustomNativeLoader;
+import org.torproject.android.service.util.Prefs;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -56,9 +57,7 @@ import java.util.concurrent.TimeoutException;
 
 import static org.torproject.android.service.TorServiceConstants.ACTION_START;
 import static org.torproject.android.service.TorServiceConstants.ACTION_START_VPN;
-import static org.torproject.android.service.TorServiceConstants.ACTION_STOP;
 import static org.torproject.android.service.TorServiceConstants.ACTION_STOP_VPN;
-import static org.torproject.android.service.vpn.VpnUtils.getSharedPrefs;
 import static org.torproject.android.service.vpn.VpnUtils.killProcess;
 
 public class OrbotVpnManager implements Handler.Callback {
@@ -371,12 +370,10 @@ public class OrbotVpnManager implements Handler.Callback {
     
     
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void doLollipopAppRouting (Builder builder) throws NameNotFoundException
-    {    
-    	   
-        ArrayList<TorifiedApp> apps = TorifiedApp.getApps(mService, getSharedPrefs(mService.getApplicationContext()));
+	private void doLollipopAppRouting (Builder builder) throws NameNotFoundException {
+		SharedPreferences prefs = Prefs.getSharedPrefs(mService.getApplicationContext());
 
-		SharedPreferences prefs = getSharedPrefs(mService.getApplicationContext());
+		ArrayList<TorifiedApp> apps = TorifiedApp.getApps(mService, prefs);
 
 		boolean perAppEnabled = false;
         
@@ -400,23 +397,6 @@ public class OrbotVpnManager implements Handler.Callback {
     
     }
     
-    
-    public void onRevoke() {
-    
-    	Log.w(TAG,"VPNService REVOKED!");
-    	
-    	if (!isRestart)
-    	{
-	    	SharedPreferences prefs = getSharedPrefs(mService.getApplicationContext());
-	        prefs.edit().putBoolean("pref_vpn", false).commit();      
-	    	stopVPN();	
-    	}
-    	
-    	isRestart = false;
-    	
-    	//super.onRevoke();
-    
-    }
 
     private void startDNS (String pdnsPath, String torDnsHost, int torDnsPort, String pdnsdHost, int pdnsdPort) throws IOException, TimeoutException
     {
