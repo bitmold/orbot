@@ -61,7 +61,7 @@ import org.torproject.android.service.vpn.VpnConstants;
 import org.torproject.android.service.vpn.VpnPrefs;
 import org.torproject.android.service.vpn.VpnUtils;
 import org.torproject.android.ui.AppManagerActivity;
-import org.torproject.android.ui.Rotate3dAnimation;
+import org.torproject.orbotcore.ui.Rotate3dAnimation;
 import org.torproject.android.ui.dialog.AboutDialogFragment;
 import org.torproject.android.ui.hiddenservices.ClientCookiesActivity;
 import org.torproject.android.ui.hiddenservices.HiddenServicesActivity;

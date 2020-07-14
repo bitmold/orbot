@@ -1,4 +1,4 @@
-package org.torproject.android.mini.ui;
+package org.torproject.orbotcore.ui;
 
 import android.content.Context;
 import androidx.appcompat.widget.AppCompatEditText;

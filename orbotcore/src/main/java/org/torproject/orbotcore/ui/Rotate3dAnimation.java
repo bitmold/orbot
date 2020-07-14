@@ -1,4 +1,4 @@
-package org.torproject.android.ui;
+package org.torproject.orbotcore.ui;
 
 import android.graphics.Camera;
 import android.graphics.Matrix;

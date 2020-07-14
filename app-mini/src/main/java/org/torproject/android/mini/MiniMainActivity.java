@@ -52,7 +52,6 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONArray;
 import org.torproject.android.mini.ui.AppConfigActivity;
 import org.torproject.android.mini.ui.AppManagerActivity;
-import org.torproject.android.mini.ui.Rotate3dAnimation;
 import org.torproject.android.mini.ui.onboarding.OnboardingActivity;
 import org.torproject.android.service.OrbotConstants;
 import org.torproject.android.service.OrbotService;
@@ -63,6 +62,7 @@ import org.torproject.android.service.vpn.VpnConstants;
 import org.torproject.android.service.vpn.VpnPrefs;
 import org.torproject.orbotcore.Languages;
 import org.torproject.orbotcore.LocaleHelper;
+import org.torproject.orbotcore.ui.Rotate3dAnimation;
 
 import java.io.BufferedReader;
 import java.io.IOException;
