@@ -50,9 +50,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONArray;
-import org.torproject.android.mini.settings.Languages;
-import org.torproject.android.mini.settings.LocaleHelper;
-import org.torproject.android.mini.settings.SettingsPreferences;
 import org.torproject.android.mini.ui.AppConfigActivity;
 import org.torproject.android.mini.ui.AppManagerActivity;
 import org.torproject.android.mini.ui.Rotate3dAnimation;
@@ -64,6 +61,8 @@ import org.torproject.android.service.util.Prefs;
 import org.torproject.android.service.vpn.TorifiedApp;
 import org.torproject.android.service.vpn.VpnConstants;
 import org.torproject.android.service.vpn.VpnPrefs;
+import org.torproject.orbotcore.Languages;
+import org.torproject.orbotcore.LocaleHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -328,7 +327,7 @@ public class MiniMainActivity extends AppCompatActivity
         }
     	 else if (item.getItemId() == R.id.menu_settings)
          {
-             Intent intent = new Intent(MiniMainActivity.this, SettingsPreferences.class);
+             Intent intent = new Intent(MiniMainActivity.this, OrbotMiniSettingsActivity.class);
              startActivityForResult(intent, REQUEST_SETTINGS);
          }
     	 /**

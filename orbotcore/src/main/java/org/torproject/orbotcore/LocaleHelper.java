@@ -1,4 +1,4 @@
-package org.torproject.android.settings;
+package org.torproject.orbotcore;
 
 import android.annotation.TargetApi;
 import android.content.Context;

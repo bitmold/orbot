@@ -24,13 +24,13 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import org.torproject.android.R;
-import org.torproject.android.settings.LocaleHelper;
 import org.torproject.android.ui.hiddenservices.adapters.OnionListAdapter;
 import org.torproject.android.ui.hiddenservices.dialogs.HSActionsDialog;
 import org.torproject.android.ui.hiddenservices.dialogs.HSDataDialog;
 import org.torproject.android.ui.hiddenservices.dialogs.SelectHSBackupDialog;
 import org.torproject.android.ui.hiddenservices.permissions.PermissionManager;
 import org.torproject.android.ui.hiddenservices.providers.HSContentProvider;
+import org.torproject.orbotcore.LocaleHelper;
 
 public class HiddenServicesActivity extends AppCompatActivity {
     public final int WRITE_EXTERNAL_STORAGE_FROM_ACTIONBAR = 1;

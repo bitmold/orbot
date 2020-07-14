@@ -14,8 +14,8 @@ import android.content.res.Configuration;
 import androidx.core.app.NotificationCompat;
 import org.torproject.android.service.OrbotConstants;
 import org.torproject.android.service.util.Prefs;
-import org.torproject.android.settings.Languages;
-import org.torproject.android.settings.LocaleHelper;
+import org.torproject.orbotcore.Languages;
+import org.torproject.orbotcore.LocaleHelper;
 
 import java.util.Locale;
 

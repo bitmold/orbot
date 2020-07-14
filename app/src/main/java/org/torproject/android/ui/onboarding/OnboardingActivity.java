@@ -13,9 +13,9 @@ import com.github.paolorotolo.appintro.AppIntro;
 
 import org.torproject.android.R;
 import org.torproject.android.service.util.Prefs;
-import org.torproject.android.settings.LocaleHelper;
 import org.torproject.android.ui.AppManagerActivity;
 import org.torproject.android.ui.hiddenservices.permissions.PermissionManager;
+import org.torproject.orbotcore.LocaleHelper;
 
 public class OnboardingActivity extends AppIntro {
     private CustomSlideBigText welcome, intro2, cs2, cs3;

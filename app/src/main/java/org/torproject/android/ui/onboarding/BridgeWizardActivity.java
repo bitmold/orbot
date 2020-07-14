@@ -18,7 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.torproject.android.R;
 import org.torproject.android.service.util.Prefs;
-import org.torproject.android.settings.LocaleHelper;
+import org.torproject.orbotcore.LocaleHelper;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

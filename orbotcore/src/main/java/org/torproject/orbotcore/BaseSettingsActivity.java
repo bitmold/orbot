@@ -1,7 +1,7 @@
 /* Copyright (c) 2009, Nathan Freitas, Orbot / The Guardian Project - http://openideals.com/guardian */
 /* See LICENSE for licensing information */
 
-package org.torproject.android.settings;
+package org.torproject.orbotcore;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,15 +15,19 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import org.torproject.android.R;
 
-public class SettingsPreferences extends PreferenceActivity {
+import androidx.annotation.XmlRes;
+
+public abstract class BaseSettingsActivity extends PreferenceActivity {
     private ListPreference prefLocale = null;
+
+    @XmlRes
+    protected abstract int getPreferencesXmlResource();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(getPreferencesXmlResource());
         setNoPersonalizedLearningOnEditTextPreferences();
         getPreferenceManager().setSharedPreferencesMode(Context.MODE_MULTI_PROCESS);
 

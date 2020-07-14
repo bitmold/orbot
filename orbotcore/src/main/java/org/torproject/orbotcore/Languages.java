@@ -1,4 +1,4 @@
-package org.torproject.android.mini.settings;
+package org.torproject.orbotcore;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,9 +19,9 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class Languages {
-    public static final String TAG = "Languages";
+    public static final String TAG = "org.torproject.orbotcore.Languages";
 
-    public static final Locale defaultLocale;
+    public static Locale defaultLocale;
     public static final Locale TIBETAN = new Locale("bo");
     static final Locale localesToTest[] = {
             Locale.ENGLISH, Locale.FRENCH, Locale.GERMAN,
@@ -61,20 +61,18 @@ public class Languages {
     private static Map<String, String> tmpMap = new TreeMap<String, String>();
     private static Map<String, String> nameMap;
 
-    static {
-        defaultLocale = Locale.getDefault();
-    }
 
     private Languages(Activity activity) {
+
+
         AssetManager assets = activity.getAssets();
         Configuration config = activity.getResources().getConfiguration();
         // Resources() requires DisplayMetrics, but they are only needed for drawables
         DisplayMetrics ignored = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(ignored);
         Resources resources;
-        Set<Locale> localeSet = new LinkedHashSet<Locale>();
+        Set<Locale> localeSet = new LinkedHashSet<>();
         for (Locale locale : localesToTest) {
-            config.locale = locale;
             resources = new Resources(assets, ignored, config);
             if (!TextUtils.equals(defaultString, resources.getString(resId))
                     || locale.equals(Locale.ENGLISH))
@@ -119,11 +117,13 @@ public class Languages {
      * @return
      */
     public static void setup(Class<?> clazz, int resId) {
+        defaultLocale = Locale.getDefault();
+
         if (Languages.clazz == null) {
             Languages.clazz = clazz;
             Languages.resId = resId;
         } else {
-            throw new RuntimeException("Languages singleton was already initialized, duplicate call to Languages.setup()!");
+            throw new RuntimeException("org.torproject.orbotcore.Languages singleton was already initialized, duplicate call to org.torproject.orbotcore.Languages.setup()!");
         }
     }
 
@@ -189,21 +189,6 @@ public class Languages {
         activity.overridePendingTransition(0, 0);
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
-    }
-
-    /**
-     * Return the name of the language based on the locale.
-     *
-     * @param locale
-     * @return
-     */
-    public String getName(String locale) {
-        String ret = nameMap.get(locale);
-        // if no match, try to return a more general name (i.e. English for
-        // en_IN)
-        if (ret == null && locale.contains("_"))
-            ret = nameMap.get(locale.split("_")[0]);
-        return ret;
     }
 
     /**

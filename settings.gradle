@@ -1,1 +1,2 @@
+include ':orbotcore'
 include ':orbotservice',':app',':app-mini'

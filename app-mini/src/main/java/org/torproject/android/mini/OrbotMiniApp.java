@@ -15,10 +15,11 @@ import androidx.core.app.NotificationCompat;
 import com.github.javiersantos.appupdater.AppUpdater;
 import com.github.javiersantos.appupdater.enums.Display;
 import com.github.javiersantos.appupdater.enums.UpdateFrom;
-import org.torproject.android.mini.settings.Languages;
-import org.torproject.android.mini.settings.LocaleHelper;
+
 import org.torproject.android.service.OrbotConstants;
 import org.torproject.android.service.util.Prefs;
+import org.torproject.orbotcore.Languages;
+import org.torproject.orbotcore.LocaleHelper;
 
 import java.util.Locale;
 

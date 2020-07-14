@@ -60,9 +60,6 @@ import org.torproject.android.service.util.Prefs;
 import org.torproject.android.service.vpn.VpnConstants;
 import org.torproject.android.service.vpn.VpnPrefs;
 import org.torproject.android.service.vpn.VpnUtils;
-import org.torproject.android.settings.Languages;
-import org.torproject.android.settings.LocaleHelper;
-import org.torproject.android.settings.SettingsPreferences;
 import org.torproject.android.ui.AppManagerActivity;
 import org.torproject.android.ui.Rotate3dAnimation;
 import org.torproject.android.ui.dialog.AboutDialogFragment;
@@ -73,6 +70,8 @@ import org.torproject.android.ui.hiddenservices.permissions.PermissionManager;
 import org.torproject.android.ui.hiddenservices.providers.HSContentProvider;
 import org.torproject.android.ui.onboarding.BridgeWizardActivity;
 import org.torproject.android.ui.onboarding.OnboardingActivity;
+import org.torproject.orbotcore.Languages;
+import org.torproject.orbotcore.LocaleHelper;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -462,10 +461,10 @@ public class OrbotMainActivity extends AppCompatActivity implements OrbotConstan
         if (item.getItemId() == R.id.menu_newnym) {
             requestNewTorIdentity();
         } else if (item.getItemId() == R.id.menu_settings) {
-            Intent intent = new Intent(OrbotMainActivity.this, SettingsPreferences.class);
+            Intent intent = new Intent(OrbotMainActivity.this, OrbotSettingsActivity.class);
             startActivityForResult(intent, REQUEST_SETTINGS);
         } else if (item.getItemId() == R.id.menu_exit) {
-            doExit(); // exit appp
+            doExit(); // exit app
         } else if (item.getItemId() == R.id.menu_about) {
             new AboutDialogFragment().show(getSupportFragmentManager(), AboutDialogFragment.TAG);
         } else if (item.getItemId() == R.id.menu_scan) {
@@ -812,7 +811,6 @@ public class OrbotMainActivity extends AppCompatActivity implements OrbotConstan
                 String newLocale = data.getStringExtra("locale");
                 Prefs.setDefaultLocale(newLocale);
                 Languages.setLanguage(this, newLocale, true);
-                //  Language.setFromPreference(this, "pref_default_locale");
 
                 finish();
 

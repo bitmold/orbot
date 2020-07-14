@@ -22,13 +22,13 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.torproject.android.R;
-import org.torproject.android.settings.LocaleHelper;
 import org.torproject.android.ui.hiddenservices.adapters.ClientCookiesAdapter;
 import org.torproject.android.ui.hiddenservices.dialogs.AddCookieDialog;
 import org.torproject.android.ui.hiddenservices.dialogs.CookieActionsDialog;
 import org.torproject.android.ui.hiddenservices.dialogs.SelectCookieBackupDialog;
 import org.torproject.android.ui.hiddenservices.permissions.PermissionManager;
 import org.torproject.android.ui.hiddenservices.providers.CookieContentProvider;
+import org.torproject.orbotcore.LocaleHelper;
 
 public class ClientCookiesActivity extends AppCompatActivity {
     public final int WRITE_EXTERNAL_STORAGE_FROM_COOKIE_ACTIONBAR = 3;
