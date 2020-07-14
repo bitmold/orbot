@@ -21,17 +21,11 @@ import java.util.Locale;
 public class LocaleHelper {
 
     public static Context onAttach(Context context) {
-        String lang = getPersistedData(context, Locale.getDefault().getLanguage());
-        return setLocale(context, lang);
-    }
-
-    public static Context onAttach(Context context, String defaultLanguage) {
-        String lang = getPersistedData(context, defaultLanguage);
-        return setLocale(context, lang);
+        return setLocale(context, getPersistedData());
     }
 
     public static Context setLocale(Context context, String language) {
-        persist(context, language);
+        persist(language);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             return updateResources(context, language);
@@ -40,11 +34,11 @@ public class LocaleHelper {
         return updateResourcesLegacy(context, language);
     }
 
-    private static String getPersistedData(Context context, String defaultLanguage) {
+    private static String getPersistedData() {
         return Prefs.getDefaultLocale();
     }
 
-    private static void persist(Context context, String language) {
+    private static void persist(String language) {
         Prefs.setDefaultLocale(language);
     }
 

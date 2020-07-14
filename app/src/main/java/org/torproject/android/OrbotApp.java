@@ -33,7 +33,7 @@ public class OrbotApp extends Application implements OrbotConstants {
     @Override
     protected void attachBaseContext(Context base) {
         Prefs.setContext(base);
-        super.attachBaseContext(LocaleHelper.onAttach(base, Prefs.getDefaultLocale()));
+        super.attachBaseContext(LocaleHelper.onAttach(base));
     }
 
     @Override

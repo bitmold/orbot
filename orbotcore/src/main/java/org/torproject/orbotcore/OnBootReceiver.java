@@ -1,6 +1,5 @@
 package org.torproject.orbotcore;
 
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,16 +15,13 @@ public class OnBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         if (Prefs.startOnBoot() && (!sReceivedBoot)) {
             startService(TorServiceConstants.ACTION_START_ON_BOOT, context);
             sReceivedBoot = true;
         }
     }
 
-
     private void startService(String action, Context context) {
-
         Intent intent = new Intent(context, OrbotService.class);
         intent.setAction(action);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -35,7 +31,5 @@ public class OnBootReceiver extends BroadcastReceiver {
         }
 
     }
-
-
 }
 
