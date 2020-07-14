@@ -1,8 +1,6 @@
-
 package org.torproject.android.mini;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -23,10 +21,7 @@ import org.torproject.orbotcore.LocaleHelper;
 
 import java.util.Locale;
 
-
 public class OrbotMiniApp extends Application implements OrbotConstants {
-
-    private Locale locale;
 
     @Override
     public void onCreate() {
@@ -68,11 +63,6 @@ public class OrbotMiniApp extends Application implements OrbotConstants {
         activity.startActivity(intent);
         activity.overridePendingTransition(0, 0);
     }**/
-
-    public static Languages getLanguages(Activity activity) {
-        return Languages.get(activity);
-    }
-
 
     @SuppressLint("NewApi")
     protected void showToolbarNotification (String shortMsg, String notifyMsg, int notifyId, int icon)

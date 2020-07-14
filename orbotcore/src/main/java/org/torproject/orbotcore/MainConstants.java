@@ -1,4 +1,4 @@
-package org.torproject.android;
+package org.torproject.orbotcore;
 
 public interface MainConstants {
 

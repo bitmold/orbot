@@ -39,8 +39,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
-import static org.torproject.android.MainConstants.EMAIL_TOR_BRIDGES;
-import static org.torproject.android.MainConstants.URL_TOR_BRIDGES;
+import static org.torproject.orbotcore.MainConstants.EMAIL_TOR_BRIDGES;
+import static org.torproject.orbotcore.MainConstants.URL_TOR_BRIDGES;
 
 public class CustomBridgesActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
 

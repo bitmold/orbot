@@ -137,7 +137,7 @@
         </receiver>
 
         <receiver
-            android:name=".OnBootReceiver"
+            android:name="org.torproject.orbotcore.OnBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

@@ -73,7 +73,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import static org.torproject.android.mini.MainConstants.RESULT_CLOSE_ALL;
+import static org.torproject.orbotcore.MainConstants.RESULT_CLOSE_ALL;
 import static org.torproject.android.service.vpn.VpnPrefs.PREFS_KEY_TORIFIED;
 import static org.torproject.android.service.vpn.VpnUtils.getSharedPrefs;
 
@@ -99,7 +99,7 @@ public class MiniMainActivity extends AppCompatActivity
     private SharedPreferences mPrefs = null;
 
     private boolean autoStartFromIntent = false;
-    
+
     private final static int REQUEST_VPN = 8888;
     private final static int REQUEST_SETTINGS = 0x9874;
     private final static int REQUEST_VPN_APPS_SELECT = 8889;
@@ -213,7 +213,7 @@ public class MiniMainActivity extends AppCompatActivity
 
             } else if (action.equals(TorServiceConstants.ACTION_STATUS)) {
                 lastStatusIntent = intent;
-                
+
                 Message msg = mStatusUpdateHandler.obtainMessage(STATUS_UPDATE);
                 msg.getData().putString("status", intent.getStringExtra(TorServiceConstants.EXTRA_STATUS));
 
@@ -230,16 +230,16 @@ public class MiniMainActivity extends AppCompatActivity
             }
         }
     };
- 
+
     private void doLayout ()
     {
         setContentView(R.layout.layout_main);
-        
+
         setTitle(R.string.app_name);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         mTxtOrbotLog = (TextView)findViewById(R.id.orbotLog);
@@ -267,7 +267,7 @@ public class MiniMainActivity extends AppCompatActivity
 
 
 		mBtnVPN = (SwitchCompat)findViewById(R.id.btnVPN);
-		
+
         boolean useVPN = Prefs.useVpn();
         mBtnVPN.setChecked(useVPN);
 
@@ -315,8 +315,8 @@ public class MiniMainActivity extends AppCompatActivity
         inflater.inflate(R.menu.orbot_main, menu);
         return true;
     }
-    
-    
+
+
 
     @Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -335,13 +335,13 @@ public class MiniMainActivity extends AppCompatActivity
          {
                  //exit app
                  doExit();
-                 
+
          }**/
          else if (item.getItemId() == R.id.menu_about)
          {
                  showAbout();
-                 
-                 
+
+
          }
          /**
          else if (item.getItemId() == R.id.menu_scan)
@@ -351,17 +351,17 @@ public class MiniMainActivity extends AppCompatActivity
          }
          else if (item.getItemId() == R.id.menu_share_bridge)
          {
-         	
+
      		String bridges = Prefs.getBridgesList();
-         	
+
      		if (bridges != null && bridges.length() > 0)
      		{
          		try {
 						bridges = "bridge://" + URLEncoder.encode(bridges,"UTF-8");
-	            		
+
 	                	IntentIntegrator integrator = new IntentIntegrator(MiniMainActivity.this);
 	                	integrator.shareText(bridges);
-	                	
+
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -369,24 +369,24 @@ public class MiniMainActivity extends AppCompatActivity
      		}
 
          }**/
-     
+
 		return super.onOptionsItemSelected(item);
 	}
 
 	private void showAbout ()
         {
-                
+
             LayoutInflater li = LayoutInflater.from(this);
-            View view = li.inflate(R.layout.layout_about, null); 
-            
+            View view = li.inflate(R.layout.layout_about, null);
+
             String version = "";
-            
+
             try {
                 version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName + " (Tor " + OrbotService.BINARY_TOR_VERSION + ")";
             } catch (NameNotFoundException e) {
                 version = "Version Not Found";
             }
-            
+
             TextView versionName = (TextView)view.findViewById(R.id.versionName);
             versionName.setText(version);
 
@@ -399,7 +399,7 @@ public class MiniMainActivity extends AppCompatActivity
                 aboutOther.setText(Html.fromHtml(aboutText));
             }
             catch (Exception e){}
-            
+
                     new AlertDialog.Builder(this)
             .setTitle(getString(R.string.button_about))
             .setView(view)
@@ -439,7 +439,7 @@ public class MiniMainActivity extends AppCompatActivity
 		try
 		{
 			super.onPause();
-	
+
 			if (aDialog != null)
 				aDialog.dismiss();
 		}
@@ -582,7 +582,7 @@ public class MiniMainActivity extends AppCompatActivity
 
         }
     }
-    
+
     @Override
     protected void onActivityResult(int request, int response, Intent data) {
         super.onActivityResult(request, response, data);
@@ -626,50 +626,50 @@ public class MiniMainActivity extends AppCompatActivity
             Prefs.putUseVpn(false);
         }
 
-        
+
         IntentResult scanResult = IntentIntegrator.parseActivityResult(request, response, data);
         if (scanResult != null) {
              // handle scan result
-        	
+
         	String results = scanResult.getContents();
-        	
+
         	if (results != null && results.length() > 0)
         	{
 	        	try {
-					
+
 					int urlIdx = results.indexOf("://");
-					
+
 					if (urlIdx!=-1)
 					{
 						results = URLDecoder.decode(results, "UTF-8");
 						results = results.substring(urlIdx+3);
 
-						showAlert(getString(R.string.bridges_updated),getString(R.string.restart_orbot_to_use_this_bridge_) + results,false);	
-						
+						showAlert(getString(R.string.bridges_updated),getString(R.string.restart_orbot_to_use_this_bridge_) + results,false);
+
 						setNewBridges(results);
 					}
 					else
 					{
 						JSONArray bridgeJson = new JSONArray(results);
 						StringBuffer bridgeLines = new StringBuffer();
-						
+
 						for (int i = 0; i < bridgeJson.length(); i++)
 						{
 							String bridgeLine = bridgeJson.getString(i);
 							bridgeLines.append(bridgeLine).append("\n");
 						}
-						
+
 						setNewBridges(bridgeLines.toString());
 					}
-					
-					
+
+
 				} catch (Exception e) {
 					Log.e(TAG,"unsupported",e);
 				}
         	}
-        	
+
           }
-        
+
     }
 
     /**
@@ -685,9 +685,9 @@ public class MiniMainActivity extends AppCompatActivity
         {
         	enableBridges(false);
         }
-        
+
     }**/
-    
+
 
     private void enableBridges (boolean enable)
     {
@@ -737,7 +737,7 @@ public class MiniMainActivity extends AppCompatActivity
     }
 
     AlertDialog aDialog = null;
-    
+
     //general alert dialog for mostly Tor warning messages
     //sometimes this can go haywire or crazy with too many error
     //messages from Tor, and the user cannot stop or exit Orbot
@@ -750,7 +750,7 @@ public class MiniMainActivity extends AppCompatActivity
                             aDialog.dismiss();
             }
             catch (Exception e){} //swallow any errors
-            
+
              if (button)
              {
                             aDialog = new AlertDialog.Builder(MiniMainActivity.this)
@@ -768,7 +768,7 @@ public class MiniMainActivity extends AppCompatActivity
              .setMessage(msg)
              .show();
              }
-    
+
              aDialog.setCanceledOnTouchOutside(true);
     }
 
@@ -796,7 +796,7 @@ public class MiniMainActivity extends AppCompatActivity
     	    torStatus = newTorStatus;
 
         if (torStatus == TorServiceConstants.STATUS_ON) {
-        	
+
             imgStatus.setImageResource(R.drawable.toron);
 
             //lblStatus.setText(getString(R.string.status_activated));
@@ -819,8 +819,8 @@ public class MiniMainActivity extends AppCompatActivity
                 finish();
                 Log.d(TAG, "autoStartFromIntent finish");
             }
-            
-            
+
+
 
         } else if (torStatus == TorServiceConstants.STATUS_STARTING) {
 
@@ -840,7 +840,7 @@ public class MiniMainActivity extends AppCompatActivity
 
         //	  if (torServiceMsg != null && torServiceMsg.contains(TorServiceConstants.LOG_NOTICE_HEADER))
           //    	lblStatus.setText(torServiceMsg);
-        	  
+
             imgStatus.setImageResource(R.drawable.torstarting);
 //            lblStatus.setText(torServiceMsg);
 
@@ -864,7 +864,7 @@ public class MiniMainActivity extends AppCompatActivity
         sendIntentToService(TorServiceConstants.ACTION_START);
         mTxtOrbotLog.setText("");
     }
-    
+
     /**
      * Request tor status without starting it
      * {@link TorServiceConstants#ACTION_START} {@link Intent} to
@@ -891,9 +891,9 @@ public class MiniMainActivity extends AppCompatActivity
         } else {
             stopTor();
         }
-        
+
         return true;
-                
+
     }
 
 // this is what takes messages or values from the callback threads or other non-mainUI threads
@@ -910,10 +910,10 @@ public class MiniMainActivity extends AppCompatActivity
                 case MESSAGE_TRAFFIC_COUNT:
 
                     DataCount datacount =  new DataCount(data.getLong("upload"),data.getLong("download"));
-                    
+
                     long totalRead = data.getLong("readTotal");
                     long totalWrite = data.getLong("writeTotal");
-                
+
 //                    downloadText.setText(formatCount(datacount.Download) + " / " + formatTotal(totalRead));
  //                   uploadText.setText(formatCount(datacount.Upload) + " / " + formatTotal(totalWrite));
 
@@ -956,13 +956,13 @@ public class MiniMainActivity extends AppCompatActivity
            public long Upload;
            // data downloaded
            public long Download;
-           
+
            DataCount(long Upload, long Download){
                this.Upload = Upload;
                this.Download = Download;
            }
        }
-       
+
     private String formatCount(long count) {
         NumberFormat numberFormat = NumberFormat.getInstance(Locale.getDefault());
         // Converts the supplied argument into a string.

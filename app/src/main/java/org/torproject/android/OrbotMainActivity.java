@@ -85,9 +85,9 @@ import java.util.StringTokenizer;
 import pl.bclogic.pulsator4droid.library.PulsatorLayout;
 
 import static androidx.core.content.FileProvider.getUriForFile;
-import static org.torproject.android.MainConstants.COUNTRY_CODES;
-import static org.torproject.android.MainConstants.RESULT_CLOSE_ALL;
-import static org.torproject.android.MainConstants.URL_TOR_CHECK;
+import static org.torproject.orbotcore.MainConstants.COUNTRY_CODES;
+import static org.torproject.orbotcore.MainConstants.RESULT_CLOSE_ALL;
+import static org.torproject.orbotcore.MainConstants.URL_TOR_CHECK;
 import static org.torproject.android.service.TorServiceConstants.ACTION_START;
 import static org.torproject.android.service.TorServiceConstants.ACTION_START_VPN;
 import static org.torproject.android.service.TorServiceConstants.ACTION_STOP_VPN;

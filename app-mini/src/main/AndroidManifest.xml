@@ -60,9 +60,8 @@
 
         <activity android:name=".ui.onboarding.OnboardingActivity" />
 
-
         <receiver
-            android:name=".OnBootReceiver"
+            android:name="org.torproject.orbotcore.OnBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -82,19 +81,12 @@
             </intent-filter>
         </receiver>
 
+
         <service
             android:name="org.torproject.android.service.OrbotService"
             android:enabled="true"
             android:permission="android.permission.BIND_VPN_SERVICE"
             android:stopWithTask="false" />
-        <service
-            android:name="org.torproject.android.service.vpn.TorVpnService"
-            android:enabled="true"
-            android:permission="android.permission.BIND_VPN_SERVICE">
-            <intent-filter>
-                <action android:name="android.net.VpnService" />
-            </intent-filter>
-        </service>
     </application>
     <uses-feature
         android:name="android.hardware.touchscreen"
