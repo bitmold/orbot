@@ -10,9 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import androidx.core.app.NotificationCompat;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
 
 import org.torproject.android.service.OrbotConstants;
 import org.torproject.android.service.util.Prefs;
@@ -31,12 +28,6 @@ public class OrbotMiniApp extends Application implements OrbotConstants {
         if (!Prefs.getDefaultLocale().equals(Locale.getDefault().getLanguage())) {
             Languages.setLanguage(this, Prefs.getDefaultLocale(), true);
         }
-
-        //check for updates via github, since it is unlikely to be blocked; notify the user of places where upgrades can be found
-        new AppUpdater(this)
-                .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON("https://raw.githubusercontent.com/n8fr8/orbot/master/update.json")
-                .setDisplay(Display.NOTIFICATION).start();
     }
 
     @Override
