@@ -77,8 +77,7 @@ import static org.torproject.orbotcore.MainConstants.RESULT_CLOSE_ALL;
 import static org.torproject.android.service.vpn.VpnPrefs.PREFS_KEY_TORIFIED;
 import static org.torproject.android.service.vpn.VpnUtils.getSharedPrefs;
 
-public class MiniMainActivity extends AppCompatActivity
-        implements OrbotConstants, OnLongClickListener {
+public class MiniMainActivity extends AppCompatActivity implements OrbotConstants, OnLongClickListener {
 
     /* Useful UI bits */
 //    private TextView lblStatus = null; //the main text display widget

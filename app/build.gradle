@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 
 // Create a variable called keystorePropertiesFile, and initialize it to your
@@ -130,6 +131,8 @@ dependencies {
     androidTestImplementation "tools.fastlane:screengrab:1.2.0"
     implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
     implementation 'com.android.volley:volley:1.1.1'
+    implementation "androidx.core:core-ktx:+"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 // Map for the version code that gives each ABI a value.
@@ -147,4 +150,8 @@ android.applicationVariants.all { variant ->
             output.versionCodeOverride = Integer.valueOf(variant.versionCode) + Integer.valueOf(baseVersionCode)
         }
     }
+}
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
 }
