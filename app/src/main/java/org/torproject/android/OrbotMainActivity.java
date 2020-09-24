@@ -1083,6 +1083,7 @@ public class OrbotMainActivity extends AppCompatActivity implements OrbotConstan
      */
     private void startTor() {
         sendIntentToService(ACTION_START);
+        if (mBtnVPN.isChecked()) startVpn();
         mTxtOrbotLog.setText("");
     }
 
