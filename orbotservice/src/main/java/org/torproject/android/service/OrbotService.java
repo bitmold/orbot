@@ -85,8 +85,8 @@ import info.pluggabletransports.dispatch.util.TransportManager;
 public class OrbotService extends VpnService implements TorServiceConstants, OrbotConstants {
 
     public final static String BINARY_TOR_VERSION = org.torproject.android.binary.TorServiceConstants.BINARY_TOR_VERSION;
-    private final static int CONTROL_SOCKET_TIMEOUT = 60000;
     static final int NOTIFY_ID = 1;
+    private final static int CONTROL_SOCKET_TIMEOUT = 60000;
     private static final int ERROR_NOTIFY_ID = 3;
     private static final int HS_NOTIFY_ID = 4;
     private static final Uri HS_CONTENT_URI = Uri.parse("content://org.torproject.android.ui.hiddenservices.providers/hs");
@@ -102,6 +102,21 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
     public static File fileTor;
     public static File fileObfsclient;
     public static File fileTorRc;
+    private final ExecutorService mExecutor = Executors.newFixedThreadPool(3);
+    private final String[] hsProjection = new String[]{
+            HiddenService._ID,
+            HiddenService.NAME,
+            HiddenService.DOMAIN,
+            HiddenService.PORT,
+            HiddenService.AUTH_COOKIE,
+            HiddenService.AUTH_COOKIE_VALUE,
+            HiddenService.ONION_PORT,
+            HiddenService.ENABLED};
+    private final String[] cookieProjection = new String[]{
+            ClientCookie._ID,
+            ClientCookie.DOMAIN,
+            ClientCookie.AUTH_COOKIE_VALUE,
+            ClientCookie.ENABLED};
     boolean mIsLollipop = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     TorEventHandler mEventHandler;
     OrbotVpnManager mVpnManager;
@@ -118,23 +133,8 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
     private NotificationManager mNotificationManager = null;
     private NotificationCompat.Builder mNotifyBuilder;
     private boolean mNotificationShowing = false;
-    private final ExecutorService mExecutor = Executors.newFixedThreadPool(3);
     private File mHSBasePath;
     private ArrayList<Bridge> alBridges = null;
-    private final String[] hsProjection = new String[]{
-            HiddenService._ID,
-            HiddenService.NAME,
-            HiddenService.DOMAIN,
-            HiddenService.PORT,
-            HiddenService.AUTH_COOKIE,
-            HiddenService.AUTH_COOKIE_VALUE,
-            HiddenService.ONION_PORT,
-            HiddenService.ENABLED};
-    private final String[] cookieProjection = new String[]{
-            ClientCookie._ID,
-            ClientCookie.DOMAIN,
-            ClientCookie.AUTH_COOKIE_VALUE,
-            ClientCookie.ENABLED};
 
     /**
      * @param bridgeList bridges that were manually entered into Orbot settings
@@ -357,13 +357,6 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /**
-         // if that fails, try again using native utils
-         try {
-         killProcess(fileTor, "-1"); // this is -HUP
-         } catch (Exception e) {
-         e.printStackTrace();
-         }**/
     }
 
     protected void logNotice(String msg) {
@@ -757,6 +750,11 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
     }
 
     private void updateOnionNames() throws SecurityException {
+        ContentResolver mCR = getApplicationContext().getContentResolver();
+
+    }
+
+    private void updateOnionNames1() throws SecurityException {
         // Tor is running, update new .onion names at db
         ContentResolver mCR = getApplicationContext().getContentResolver();
         Cursor hidden_services = mCR.query(HS_CONTENT_URI, hsProjection, null, null, null);
@@ -1460,19 +1458,9 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
 
         extraLines.append("StrictNodes" + ' ' + (enableStrictNodes ? "1" : "0")).append('\n');
 
-        try {
-            if (ReachableAddresses) {
-                String ReachableAddressesPorts =
-                        prefs.getString(OrbotConstants.PREF_REACHABLE_ADDRESSES_PORTS, "*:80,*:443");
-
-                extraLines.append("ReachableAddresses" + ' ' + ReachableAddressesPorts).append('\n');
-
-            }
-
-        } catch (Exception e) {
-            showToolbarNotification(getString(R.string.your_reachableaddresses_settings_caused_an_exception_), ERROR_NOTIFY_ID, R.drawable.ic_stat_notifyerr);
-
-            return null;
+        if (ReachableAddresses) {
+            String ReachableAddressesPorts = prefs.getString(OrbotConstants.PREF_REACHABLE_ADDRESSES_PORTS, "*:80,*:443");
+            extraLines.append("ReachableAddresses" + ' ' + ReachableAddressesPorts).append('\n');
         }
 
         try {
@@ -1490,55 +1478,55 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
             }
         } catch (Exception e) {
             showToolbarNotification(getString(R.string.your_relay_settings_caused_an_exception_), ERROR_NOTIFY_ID, R.drawable.ic_stat_notifyerr);
-
-
             return null;
         }
 
         ContentResolver mCR = getApplicationContext().getContentResolver();
+        addV2HiddenServicesToBuffer(extraLines, mCR);
+        addV2ClientCookiesToBuffer(extraLines, mCR);
+        return extraLines;
+    }
 
-        try {
-            /* ---- Hidden Services ---- */
-            Cursor hidden_services = mCR.query(HS_CONTENT_URI, hsProjection, HiddenService.ENABLED + "=1", null, null);
-            if (hidden_services != null) {
-                try {
-                    while (hidden_services.moveToNext()) {
-                        String HSname = hidden_services.getString(hidden_services.getColumnIndex(HiddenService.NAME));
-                        Integer HSLocalPort = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.PORT));
-                        Integer HSOnionPort = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.ONION_PORT));
-                        Integer HSAuthCookie = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.AUTH_COOKIE));
-                        String hsDirPath = new File(mHSBasePath.getAbsolutePath(), "hs" + HSLocalPort).getCanonicalPath();
+    private void addV2HiddenServicesToBuffer(StringBuffer buffer, ContentResolver contentResolver) {
+        Cursor hidden_services = contentResolver.query(HS_CONTENT_URI, hsProjection, HiddenService.ENABLED + "=1", null, null);
+        if (hidden_services != null) {
+            try {
+                while (hidden_services.moveToNext()) {
+                    String HSname = hidden_services.getString(hidden_services.getColumnIndex(HiddenService.NAME));
+                    Integer HSLocalPort = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.PORT));
+                    Integer HSOnionPort = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.ONION_PORT));
+                    Integer HSAuthCookie = hidden_services.getInt(hidden_services.getColumnIndex(HiddenService.AUTH_COOKIE));
+                    String hsDirPath = new File(mHSBasePath.getAbsolutePath(), "hs" + HSLocalPort).getCanonicalPath();
 
-                        debug("Adding hidden service on port: " + HSLocalPort);
+                    debug("Adding hidden service on port: " + HSLocalPort);
 
-                        extraLines.append("HiddenServiceDir" + ' ' + hsDirPath).append('\n');
-                        extraLines.append("HiddenServicePort" + ' ' + HSOnionPort + " 127.0.0.1:" + HSLocalPort).append('\n');
-                        extraLines.append("HiddenServiceVersion 2").append('\n');
+                    buffer.append("HiddenServiceDir" + ' ' + hsDirPath).append('\n');
+                    buffer.append("HiddenServicePort" + ' ' + HSOnionPort + " 127.0.0.1:" + HSLocalPort).append('\n');
+                    buffer.append("HiddenServiceVersion 2").append('\n'); // TODO does this need to be moved up? bim
 
-                        if (HSAuthCookie == 1)
-                            extraLines.append("HiddenServiceAuthorizeClient stealth " + HSname).append('\n');
-                    }
-                } catch (NumberFormatException e) {
-                    Log.e(OrbotConstants.TAG, "error parsing hsport", e);
-                } catch (Exception e) {
-                    Log.e(OrbotConstants.TAG, "error starting share server", e);
+                    if (HSAuthCookie == 1)
+                        buffer.append("HiddenServiceAuthorizeClient stealth " + HSname).append('\n');
                 }
-
-                hidden_services.close();
+            } catch (NumberFormatException e) {
+                Log.e(OrbotConstants.TAG, "error parsing hsport", e);
+            } catch (Exception e) {
+                Log.e(OrbotConstants.TAG, "error starting share server", e);
             }
-        } catch (SecurityException se) {
+
+            hidden_services.close();
         }
+    }
 
+    private void addV2ClientCookiesToBuffer(StringBuffer buffer, ContentResolver contentResolver) {
         try {
-
             /* ---- Client Cookies ---- */
-            Cursor client_cookies = mCR.query(COOKIE_CONTENT_URI, cookieProjection, ClientCookie.ENABLED + "=1", null, null);
+            Cursor client_cookies = contentResolver.query(COOKIE_CONTENT_URI, cookieProjection, ClientCookie.ENABLED + "=1", null, null);
             if (client_cookies != null) {
                 try {
                     while (client_cookies.moveToNext()) {
                         String domain = client_cookies.getString(client_cookies.getColumnIndex(ClientCookie.DOMAIN));
                         String cookie = client_cookies.getString(client_cookies.getColumnIndex(ClientCookie.AUTH_COOKIE_VALUE));
-                        extraLines.append("HidServAuth" + ' ' + domain + ' ' + cookie).append('\n');
+                        buffer.append("HidServAuth" + ' ' + domain + ' ' + cookie).append('\n');
                     }
                 } catch (Exception e) {
                     Log.e(OrbotConstants.TAG, "error starting share server", e);
@@ -1548,9 +1536,8 @@ public class OrbotService extends VpnService implements TorServiceConstants, Orb
             }
         } catch (SecurityException se) {
         }
-
-        return extraLines;
     }
+
 
     //using Google DNS for now as the public DNS server
     private String writeDNSFile() throws IOException {
