@@ -92,7 +92,6 @@
     <string name="hidden_service_request">יישום רוצה לפתוח פתחה של שרת נסתר %1$s אל רשת Tor. זה בטוח אם אתה בוטח ביישום.</string>
     <string name="found_existing_tor_process">נמצא תהליך Tor קיים…</string>
     <string name="something_bad_happened">משהו רע התרחש. בדוק את היומן</string>
-    <string name="unable_to_read_hidden_service_name">לא היה ניתן לקרוא שם של שירות נסתר</string>
     <string name="unable_to_start_tor">לא מסוגל להתחיל את Tor:</string>
     <string name="pref_use_persistent_notifications">לשמור תמיד את האיקון בסרגל כלים כשאורבוט מחובר</string>
     <string name="pref_use_persistent_notifications_title">התראות תמיד-פועל</string>
@@ -123,7 +122,6 @@
     <string name="send_email">שלח דוא\"ל</string>
     <string name="vpn_default_world">עולמי (אוטומטי)</string>
     <string name="hidden_services">שירותים נסתרים</string>
-    <string name="title_activity_hidden_services">שירותים נסתרים</string>
     <string name="menu_hidden_services">שירותים נסתרים</string>
     <string name="save">שמור את</string>
     <string name="local_port">פתחה מקומית</string>
@@ -131,7 +129,6 @@
     <string name="name">שם</string>
     <string name="done">הסתיים!</string>
     <string name="copy_address_to_clipboard">העתק כתובת ללוח עריכה</string>
-    <string name="show_auth_cookie">הראה עוגיית אימות</string>
     <string name="backup_service">גבה שירות</string>
     <string name="delete_service">מחק שירות</string>
     <string name="backup_saved_at_external_storage">גיבוי נשמר באחסון חיצוני</string>
@@ -142,16 +139,8 @@
     <string name="confirm_service_deletion">אשר מחיקת שירות</string>
     <string name="service_type">סוג שירות</string>
     <string name="auth_cookie">עוגיית אימות</string>
-    <string name="copy_cookie_to_clipboard">העתק עוגייה ללוח עריכה</string>
-    <string name="auth_cookie_was_not_configured">עוגיית אימות לא הוגדרה</string>
     <string name="please_restart_Orbot_to_enable_the_changes">אנא הפעל מחדש את Orbot כדי לאפשר את השינויים</string>
-    <string name="client_cookies">עוגיות לקוח</string>
     <string name="onion">‎.onion</string>
-    <string name="cookie_from_QR">קרא מתוך QR</string>
-    <string name="backup_cookie">גבה עוגייה</string>
-    <string name="delete_cookie">מחק עוגייה</string>
-    <string name="confirm_cookie_deletion">אשר מחיקת עוגייה</string>
-    <string name="hosted_services">שירותים מאורחים</string>
     <string name="share_as_qr">שתף בתור QR</string>
     <string name="disable">השבת</string>
     <string name="enable">אפשר</string>

@@ -92,15 +92,6 @@
             android:theme="@style/Theme.AppCompat" />
 
         <activity
-            android:name=".ui.hiddenservices.HiddenServicesActivity"
-            android:label="@string/title_activity_hidden_services"
-            android:theme="@style/DefaultTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".OrbotMainActivity" />
-        </activity>
-
-        <activity
             android:name=".ui.v3onionservice.OnionServiceActivity"
             android:label="@string/hidden_services"
             android:theme="@style/DefaultTheme">
@@ -115,15 +106,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".OrbotMainActivity"/>
-        </activity>
-
-        <activity
-            android:name=".ui.hiddenservices.ClientCookiesActivity"
-            android:label="@string/client_cookies"
-            android:theme="@style/DefaultTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".OrbotMainActivity" />
         </activity>
 
         <activity
